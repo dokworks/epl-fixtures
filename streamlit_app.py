@@ -180,7 +180,7 @@ def main():
 
     # Sidebar controls
     st.sidebar.header("Settings")
-    stats_season = st.sidebar.selectbox("Stats Season", ["2024", "2023"], index=0)
+    stats_season = st.sidebar.selectbox("Stats Season", ["2025", "2024"], index=0)
     fixtures_season = st.sidebar.selectbox("Fixtures Season", ["2025", "2024"], index=0)
     prematch_only = st.sidebar.checkbox("PreMatch fixtures only", value=True)
     match_limit = st.sidebar.number_input("Match limit", min_value=1, max_value=100, value=20)
@@ -274,7 +274,6 @@ def main():
 
     # Footer info
     st.sidebar.markdown("---")
-    st.sidebar.markdown("**xGDiff Calculation:**")
     st.sidebar.markdown("(Home Team % × 5) + (Away Team % × -4.6)")
     st.sidebar.markdown("**Times:** Melbourne timezone with 1-hour API correction")
     
