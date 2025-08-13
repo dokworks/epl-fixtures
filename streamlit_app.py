@@ -274,7 +274,6 @@ def main():
 
     # Footer info
     st.sidebar.markdown("---")
-    st.sidebar.markdown("(Home Team % × 5) + (Away Team % × -4.6)")
     st.sidebar.markdown("**Times:** Melbourne timezone with 1-hour API correction")
     
     # Show current Melbourne time
