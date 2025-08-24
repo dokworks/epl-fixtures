@@ -183,7 +183,7 @@ def main():
     stats_season = st.sidebar.selectbox("Stats Season", ["2025", "2024"], index=0)
     fixtures_season = st.sidebar.selectbox("Fixtures Season", ["2025", "2024"], index=0)
     prematch_only = st.sidebar.checkbox("PreMatch fixtures only", value=True)
-    match_limit = st.sidebar.number_input("Match limit", min_value=1, max_value=100, value=20)
+    match_limit = st.sidebar.number_input("Match limit", min_value=1, max_value=100, value=10)
     
     # Add refresh button
     if st.sidebar.button("Refresh Data"):
@@ -205,12 +205,21 @@ def main():
         st.error("Failed to fetch fixtures")
         return
 
-    # Apply match limit
-    if match_limit and not matches_df.empty:
-        matches_df = matches_df.head(match_limit)
-
     # Convert to Melbourne time
     matches_df = convert_to_melbourne_time(matches_df)
+
+    # Filter to upcoming matches only (kickoff after now in Melbourne)
+    now_melbourne = datetime.now(pytz.timezone('Australia/Melbourne'))
+    if 'kickoff_melbourne' in matches_df.columns:
+        upcoming_matches = matches_df[matches_df['kickoff_melbourne'] > now_melbourne]
+    else:
+        upcoming_matches = matches_df
+
+    # Apply match limit to upcoming matches
+    if match_limit and not upcoming_matches.empty:
+        matches_df = upcoming_matches.head(match_limit)
+    else:
+        matches_df = upcoming_matches
 
     # Build schedule
     schedule = build_schedule_with_metrics(stats_df, matches_df, prematch_only=prematch_only)
