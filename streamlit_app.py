@@ -262,7 +262,7 @@ def main():
         color = 'green' if val > 0 else 'red' if val < 0 else 'gray'
         return f'color: {color}; font-weight: bold'
 
-    styled_schedule = display_schedule.style.applymap(style_xgdiff, subset=['xGDiff'])
+    styled_schedule = display_schedule.style.map(style_xgdiff, subset=['xGDiff'])
     st.dataframe(styled_schedule, use_container_width=True)
 
     # Missing stats warning
